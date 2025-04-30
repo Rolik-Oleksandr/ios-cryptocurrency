@@ -33,4 +33,22 @@ extension Double {
         return currencyFormatter.string(from: number) ?? "$0.00"
     }
     
+    ///Convert a Double into a currency as a String with 2-6 decimal places
+    ///```
+    ///12.3456 -> "1.23"
+    ///`
+    
+    func asNumberString() -> String {
+        return String(format: "%.2f", self)
+    }
+    
+    ///Convert a Double into a currency as a String with 2-6 decimal places
+    ///```
+    ///12.3456 -> "1.23%"
+    ///`
+    
+    func asPercentageString() -> String {
+        return asNumberString() + "%"
+    }
+    
 }
