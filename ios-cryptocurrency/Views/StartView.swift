@@ -13,10 +13,17 @@ struct StartView : View {
             VStack {
                 startViewHeader
                 
-                List {
-                    CoinRowView(coin: DeveloperPreview.instance.coin, showHoldingColumn: false)
+                titlesColumn
+                
+                if !showPortfolio {
+                    allCoinsList
+                        .transition(.move(edge: .leading))
                 }
-                .listStyle(PlainListStyle())
+                
+                if showPortfolio {
+                    portfolioCoinsList
+                        .transition(.move(edge: .trailing))
+                }
                 
                 Spacer(minLength: 0)
             }
@@ -25,7 +32,7 @@ struct StartView : View {
 }
 
 #Preview {
-    NavigationView {      
+    NavigationView {
         StartView()
             .navigationBarHidden(true)
     }
@@ -35,7 +42,7 @@ struct StartView : View {
 extension StartView {
     
     private var startViewHeader: some View {
-        HStack {  
+        HStack {
             CircleButtonView(iconName: showPortfolio ? "plus" : "info")
                 .background(
                     CircleButtonAnimationView(animate: $showPortfolio)
@@ -54,6 +61,42 @@ extension StartView {
                     }
                 }
         }
+        .padding(.horizontal)
+    }
+    
+    private var allCoinsList: some View {
+        List {
+            ForEach(vm.allCoin) { coin in
+                CoinRowView(coin: coin, showHoldingColumn: false)
+                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 15))
+            }
+        }
+        .listStyle(PlainListStyle())
+    }
+    
+    private var portfolioCoinsList: some View {
+        List {
+            ForEach(vm.allCoin) { coin in
+                CoinRowView(coin: coin, showHoldingColumn: true)
+                    .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 15))
+            }
+        }
+        .listStyle(PlainListStyle())
+    }
+    
+    private var titlesColumn: some View {
+        HStack {
+            Text("Coin")
+                .padding(.leading, 30)
+            Spacer()
+            if showPortfolio {
+                Text("Holdings")
+            }
+            Spacer()
+            Text("Price")
+        }
+        .font(.caption)
+        .foregroundColor(Color.theme.secondaryText)
         .padding(.horizontal)
     }
 }
