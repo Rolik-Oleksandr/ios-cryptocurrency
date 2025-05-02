@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct CoinRowView: View {
-    
     let coin: CoinModel
     let showHoldingColumn: Bool
     
@@ -34,8 +33,7 @@ extension CoinRowView {
     private var leftColumn: some View {
         HStack(spacing: 0) {
             Text("\(coin.rank)")
-                .font(.caption)
-                .background(Color.theme.secondaryText)
+                .font(.headline)
                 .frame(minWidth: 30)
             Circle()
                 .frame(width: 30, height: 30)
