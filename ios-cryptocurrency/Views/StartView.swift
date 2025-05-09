@@ -13,6 +13,8 @@ struct StartView : View {
             VStack {
                 startViewHeader
                 
+                SearchBarView(searchText: $vm.searchText)
+                
                 titlesColumn
                 
                 if !showPortfolio {
@@ -66,7 +68,7 @@ extension StartView {
     
     private var allCoinsList: some View {
         List {
-            ForEach(vm.allCoin) { coin in
+            ForEach(vm.allCoins) { coin in
                 CoinRowView(coin: coin, showHoldingColumn: false)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 15))
             }
@@ -76,7 +78,7 @@ extension StartView {
     
     private var portfolioCoinsList: some View {
         List {
-            ForEach(vm.allCoin) { coin in
+            ForEach(vm.allCoins) { coin in
                 CoinRowView(coin: coin, showHoldingColumn: true)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 15))
             }
