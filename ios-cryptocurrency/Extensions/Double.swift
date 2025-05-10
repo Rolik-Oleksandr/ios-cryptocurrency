@@ -51,4 +51,40 @@ extension Double {
         return asNumberString() + "%"
     }
     
+    ///Convert Number to BIllion, Million...
+    ///```
+    ///1234 -> 1.23K
+    ///12345678 -> 12.34M
+    ///1234567890 -> 1.23B
+    ///12345678901234 -> 12.34T
+    ///`
+    
+    func formattedWithAbbreviations() -> String {
+        let num = abs(Double(self))
+        let sign = (self < 0) ? "-" : ""
+        
+        switch num {
+        case 1_000_000_000_000...:
+            let formatted = num / 1_000_000_000_000
+            let stringFormatted = formatted.asNumberString()
+            return "\(sign)\(stringFormatted)T"
+        case 1_000_000_000...:
+            let formatted = num / 1_000_000_000
+            let stringFormatted = formatted.asNumberString()
+            return "\(sign)\(stringFormatted)B"
+        case 1_000_000...:
+            let formatted = num / 1_000_000
+            let stringFormatted = formatted.asNumberString()
+            return "\(sign)\(stringFormatted)M"
+        case 1_000...:
+            let formatted = num / 1_000
+            let stringFormatted = formatted.asNumberString()
+            return "\(sign)\(stringFormatted)K"
+        case 0...:
+            return self.asNumberString()
+        
+        default :
+            return "\(sign)\(self)"
+        }
+    }
 }
